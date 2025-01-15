@@ -9,26 +9,28 @@ public class Map{
 	private int startY;
 	private int finishX;
 	private int finishY;
-	private char mazeWallCharacter = '#';
-	private char coinCharacter = '$';
-	private char playerCharacter = 'o';
+	
+	private char mazeWallCharacter = '█';
+	private char coinCharacter1 = '$';
+	private char coinCharacter2 = '₿';
+	private char playerCharacter = '○';
+	private char exitCharacter = '#';
 	private Random random = new Random();
 	
-	Map(int size){
+	Map(int size, int startX, int startY){
 		this.size = size;
 		maze = new char[size][size];
-		startX = size / 2;
-		startY = size - 1;
+		this.startX = startX;
+		this.startY = startY;
 		clearMaze();
 		generateMaze();
 	}
 	Map(){
-		this.size = 9;
+		this.size = 5;
 		maze = new char[size][size];
-		startX = size / 2;
-		startY = size - 1;
+		startX = size - 1;
+		startY = size / 2;
 		clearMaze();
-		System.out.println(123);
 		generateMaze();
 	}
 	
@@ -44,12 +46,10 @@ public class Map{
 		int y = startY;
 		maze[x][y] = playerCharacter;
 		int[][] movesets = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
-		int[][] avaiableMovesets = {{0, 0}, {0, 0}, {0, 0}};
+		int[][] avaiableMovesets = {{0, 0}, {0, 0}, {0, 0}, {0, 0}};
 		boolean flag = true;
+		boolean isExitCreated = false;
 		while(x != startX || y != startY || flag){
-			if(flag){
-				flag = false;
-			}
 			int avaiableCount = 0;
 			int backX = 0;
 			int backY = 0;
@@ -70,9 +70,21 @@ public class Map{
 			}
 				if(avaiableCount == 0){
 					for(int i = 0; i < 2; i++){	
-						if(numberOfCoins == 0 || random.nextInt(coinSpawnChance) == coinSpawnChance - 1){
-							maze[x][y] = coinCharacter;
-							numberOfCoins++;
+						if(!isExitCreated){
+							maze[x][y] = exitCharacter;
+							finishX = x;
+							finishY = y;
+							isExitCreated = true;
+						}
+						else if(numberOfCoins == 0 || random.nextInt(coinSpawnChance) == coinSpawnChance - 1){
+							if (random.nextBoolean()){
+								maze[x][y] = coinCharacter2;
+								numberOfCoins += 5;
+							}
+							else{
+								maze[x][y] = coinCharacter1;
+								numberOfCoins++;
+							}
 						}
 						else{
 							maze[x][y] = ' ';
@@ -92,29 +104,36 @@ public class Map{
 					
 					finishX = x;
 					finishY = y;
+					if(flag){
+						flag = false;
+					}
 
 				}
 				
 		}
 	}
-	
-	
 	public void printMaze(){
 		Game.clearConsole();
-		for(int i = 0; i < size - 1; i++){
-			System.out.print(mazeWallCharacter);	
-		}
-		System.out.println(mazeWallCharacter + "\t");
+		printMazeWalls(size + 2);
 		for(int i = 0; i < size; i++){
-			System.out.print(mazeWallCharacter);
-			for(int j = 0; j < size; j++){
-				System.out.print(maze[i][j]);
-			}
-			System.out.println(mazeWallCharacter + "\t");
+			printMazeLine(i);
 		}
-		for(int i = 0; i < size - 1; i++){
+		printMazeWalls(size + 2);
+		
+	}
+	
+	private void printMazeLine(int line){
+		System.out.print("\t" + mazeWallCharacter);
+		for(int j = 0; j < size; j++){
+			System.out.print(maze[line][j]);	
+		}
+		System.out.println(mazeWallCharacter + "\t");	
+	}
+	private void printMazeWalls(int length){
+		System.out.print("\t");	
+		for(int i = 0; i < length; i++){
 			System.out.print(mazeWallCharacter);	
 		}
-		System.out.println(mazeWallCharacter + "\t");
+		System.out.println("\t");	
 	}
 }

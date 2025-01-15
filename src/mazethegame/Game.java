@@ -13,6 +13,10 @@ public class Game{
 		this.level = level;
 	}
 	
+	private void playGame(){
+		Map map = new Map();
+		map.printMaze();
+	}
 	public void startMenu(){
 		clearConsole();
 		System.out.println(
@@ -24,7 +28,6 @@ public class Game{
 		String playersChoise = scanner.nextLine();
 		while(!(playersChoise.equals("1") || playersChoise.equals("2") || playersChoise.equals("3"))){
 			System.out.println("You entered wrong number. Try again.");
-			System.out.println(playersChoise);
 			playersChoise = scanner.nextLine();
 		}
 		switch(playersChoise){
@@ -57,17 +60,11 @@ public class Game{
 		String playersChoise = scanner.nextLine();
 		while(!(playersChoise.equals("1"))){
 			System.out.println("You entered wrong number. Try again.");
-			System.out.println(playersChoise);
 			playersChoise = scanner.nextLine();
 		}
 		startMenu();
 	}
-
 	
-	private void playGame(){
-		Map map = new Map(75);
-		map.printMaze();
-	}
 	public static void clearConsole(){
 		try {
             new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
