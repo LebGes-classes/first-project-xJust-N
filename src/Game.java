@@ -14,7 +14,7 @@ public class Game{
 	}
 	
 	private void playGame(){
-		Map map = new Map();
+		Map map = new Map(81, 80, 80);
 		map.printMaze();
 	}
 	public void startMenu(){

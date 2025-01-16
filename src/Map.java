@@ -12,8 +12,8 @@ public class Map{
 	
 	private char mazeWallCharacter = '█';
 	private char coinCharacter1 = '$';
-	private char coinCharacter2 = '₿';
-	private char playerCharacter = '○';
+	private char coinCharacter2 = 'c';
+	private char playerCharacter = 'o';
 	private char exitCharacter = '#';
 	private Random random = new Random();
 	
