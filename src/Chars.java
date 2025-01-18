@@ -1,32 +1,36 @@
 public class Chars{
-	private char wallCharacter = '█';
-	private char[][] coinCharacters = {'$', 'c'};
-	private char playerCharacter = 'o';
-	private char exitCharacter = '#';
+	private static final char WALL_CHARACTER = '█';
+	private static final char[] COIN_CHARACTERS = {'$', '₿'};
+	private static final char PLAYER_CHARACTER = 'o';
+	private static final char EXIT_CHARACTER = '#';
+	private static final String YELLOW = "\u001B[33m";
+	private static final String BLUE = "\u001B[34m";
+	private static final String END = "\u001B[0m";
 	
-	public void setWallCharacter(char ch){
-		this.wallCharacter = ch;
+	
+	public static char getWallCharacter(){
+		return WALL_CHARACTER;
 	}
-	public char getWallCharacter(){
-		return wallCharacter;
+	
+	public static char[] getCoinCharacters(){
+		return COIN_CHARACTERS;
 	}
-	public void setCoinCharacters(char[] ch){
-		this.coinCharacters = new ch;
+
+	public static char getPlayerCharacter(){
+		return PLAYER_CHARACTER;
 	}
-	public char[] getCoinCharacters(){
-		return coinCharacters;
+
+	public static char getExitCharacter(){
+		return EXIT_CHARACTER;
 	}
-	public void setPlayerCharacter(char ch){
-		this.playerCharacter = ch;
+	public static String getColorYellow(){
+		return YELLOW;
 	}
-	public char getPlayerCharacter(){
-		return playerCharacter;
+	public static String getColorBlue(){
+		return BLUE;
 	}
-	public void setExitCharacter(char ch){
-		this.playerCharacter = ch;
-	}
-	public char getExitCharacter(){
-		return exitCharacter;
+	public static String getColorEnd(){
+		return END;
 	}
 	
 	

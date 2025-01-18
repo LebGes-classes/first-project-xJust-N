@@ -3,19 +3,22 @@ import java.util.Scanner;
 
 public class Game{
 	private int level;
-	private int score = 0;
-	private Scanner scanner = new Scanner(System.in);
+	private Scanner scanner;
 	
 	public Game(){
 		this.level = 0;
+		scanner = new Scanner(System.in);
 	}
 	public Game(int level){
 		this.level = level;
+		scanner = new Scanner(System.in);
 	}
 	
 	private void playGame(){
-		Map map = new Map();
-		map.printMaze();
+		Maze maze = new Maze(101);
+		MazeGenerator.generate(maze);
+		Printer.printMaze(maze);
+		
 	}
 	public void startMenu(){
 		clearConsole();
