@@ -1,7 +1,6 @@
 import java.util.Random;
 
 public class MazeGenerator{
-
 	
 	public static void generate(Maze maze){
 		int size = maze.getSize();

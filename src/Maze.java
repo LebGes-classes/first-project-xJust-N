@@ -3,30 +3,38 @@ public class Maze{
 	private int size;
 	private char[][] mazeMatrix;
 	private int numberOfCoins = 0;
-	private int startX;
-	private int startY;
+	private int playerX;
+	private int playerY;
 	private int finishX;
 	private int finishY;
 
 	
-	Maze(int size, int startX, int startY){
+	Maze(int size, int playerX, int playerY){
 		setSize(size);
-		mazeMatrix = new char[size][size];
-		setStartXPos(startX);
-		setStartYPos(startY);
+		initMazeMatrix();
+		setPlayerXPos(playerX);
+		setPlayerYPos(playerY);
 	}
 	Maze(int size){
 		setSize(size);
-		mazeMatrix = new char[size][size];
-		setStartXPos(size - 1);
-		setStartYPos(size / 2);
+		initMazeMatrix();
+		setPlayerXPos(size - 1);
+		setPlayerYPos(size / 2);
 	}
 	Maze(){
 		setSize(5);
-		mazeMatrix = new char[size][size];
-		setStartXPos(size - 1);
-		setStartYPos(size / 2);
+		initMazeMatrix();
+		setPlayerXPos(size - 1);
+		setPlayerYPos(size / 2);
 	}
+	public char getCell(int x, int y){
+		if(x >= 0 && y >= 0 && x < size && y < size){
+			return mazeMatrix[x][y]
+		}
+		throw new IllegalArgumentException("Invalid coordinates");
+	}
+	
+	
 	
 	public int getSize(){
 		return size;
@@ -34,17 +42,11 @@ public class Maze{
 	public void setSize(int size){
 		this.size = size;
 	}
-	public char getMazeCell(int x, int y){
-		return mazeMatrix[x][y];
-	}
-	public void setMazeCell(char cell, int x, int y){
-		mazeMatrix[x][y] = cell;
-	}
 	public char[][] getMazeMatrix(){
 		return mazeMatrix;
 	}
-	public void setMazeMatrix(char[][] mazeMatrix){
-		this.mazeMatrix = mazeMatrix;
+	public void initMazeMatrix(){
+		this.mazeMatrix = new char[size][size];
 	}
 	public int getNumberOfCoins(){
 		return numberOfCoins;
@@ -52,17 +54,17 @@ public class Maze{
 	public void setNumberOfCoins(int numberOfCoins){
 		this.numberOfCoins = numberOfCoins;
 	}
-	public int getStartXPos(){
-		return startX;
+	public int getPlayerXPos(){
+		return playerX;
 	}
-	public void setStartXPos(int x){
-		this.startX = x;
+	public void setPlayerXPos(int x){
+		this.playerX = x;
 	}
-	public int getStartYPos(){
-		return startY;
+	public int getPlayerYPos(){
+		return playerY;
 	}
-	public void setStartYPos(int y){
-		this.startY = y;
+	public void setPlayertYPos(int y){
+		this.playerY = y;
 	}
 	public int getFinishXPos(){
 		return finishX;
@@ -71,9 +73,9 @@ public class Maze{
 		this.finishX = x;
 	}
 	public int getFinishYPos(){
-		return startY;
+		return finishY;
 	}
 	public void setFinishYPos(int y){
-		this.startY = y;
+		this.finishY = y;
 	}
 }

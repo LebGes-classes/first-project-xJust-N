@@ -20,14 +20,8 @@ public class Game{
 		Printer.printMaze(maze);
 		
 	}
-	public void startMenu(){
-		clearConsole();
-		System.out.println(
-			"-----\tMaze\t-----\n" 
-			+ "1) New game\n" 
-			+ "2) How to play\n" 
-			+ "3) Exit"
-		);
+	public void start(){
+		Printer.printMainMenu();
 		String playersChoise = scanner.nextLine();
 		while(!(playersChoise.equals("1") || playersChoise.equals("2") || playersChoise.equals("3"))){
 			System.out.println("You entered wrong number. Try again.");
@@ -38,7 +32,7 @@ public class Game{
 				playGame();
 				break;
 			case "2":
-				conrolsMenu();
+				controls();
 				break;
 			case "3":
 				System.out.println("Bye!");
@@ -47,19 +41,8 @@ public class Game{
 		}
 	}
 	
-	private void conrolsMenu(){
-		clearConsole();
-		System.out.println(
-			"Task: Collect all coins to go on the next level\n"
-			+ "\n" 
-			+ "Controls:\n" 
-			+ "W - forward\n" 
-			+ "A - left\n" 
-			+ "S - back\n" 
-			+ "D - right\n"
-			+ "\n"
-			+ "1) back to the main menu"
-		);
+	private void controls(){
+		Printer.printControlsMenu();
 		String playersChoise = scanner.nextLine();
 		while(!(playersChoise.equals("1"))){
 			System.out.println("You entered wrong number. Try again.");
@@ -67,15 +50,4 @@ public class Game{
 		}
 		startMenu();
 	}
-	
-	public static void clearConsole(){
-		try {
-            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-		} 
-		catch (Exception E) {
-			System.out.println(E);
-		}
-	}
-	
-
 }

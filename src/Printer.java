@@ -1,12 +1,38 @@
 public class Printer{
 	
+	public static void printMainMenu(){
+		clearConsole();
+		System.out.println(
+			"-----\tMaze\t-----\n" 
+			+ "1) New game\n" 
+			+ "2) How to play\n" 
+			+ "3) Exit"
+		);
+	}
+	public static void printControlsMenu(){
+		clearConsole();
+		System.out.println(
+			"Task: Collect all coins to go on the next level\n"
+			+ "\n"
+			+ "Controls:\n"
+			+ "W - forward\n"
+			+ "A - left\n"
+			+ "S - back\n"
+			+ "D - right\n"
+			+ "\n"
+			+ "1) back to the main menu"
+		);
+	}
+	
 	public static void printMaze(Maze maze){
+		clearConsole();
 		char mazeWallCharacter = Chars.getWallCharacter();
 		char playerCharacter = Chars.getPlayerCharacter();
 		char exitCharacter = Chars.getExitCharacter();
 		String yellowColor = Chars.getColorYellow();
 		String blueColor = Chars.getColorBlue();
 		String endColor = Chars.getColorEnd();
+		
 		int size = maze.getSize();
 		char[][] mazeMatrix = maze.getMazeMatrix();
 		Game.clearConsole();
@@ -37,5 +63,13 @@ public class Printer{
 			System.out.print(ch);	
 		}
 		System.out.println("\t");	
+	}
+	public static void clearConsole(){
+		try {
+            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+		} 
+		catch (Exception E) {
+			System.out.println(E);
+		}
 	}
 }
