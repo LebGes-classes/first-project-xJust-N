@@ -36,7 +36,7 @@ public class MazeGenerator{
 			for(int[] direction : movesets){
 				int x1 = x + direction[0] * 2;
 				int y1 = y + direction[1] * 2;
-				if(maze.isAvailableCell(x1,y1)){
+				if(maze.isValidCoordinates(x1,y1)){
 					if(mazeMatrix[x1][y1] == mazeWallCharacter){
 						avaiableMovesets[avaiableCount][0] = direction[0];
 						avaiableMovesets[avaiableCount][1] = direction[1];
@@ -57,9 +57,8 @@ public class MazeGenerator{
 						isExitCreated = true;
 					}
 					else if(numberOfCoins == 0 || random.nextInt(coinSpawnChance) == coinSpawnChance - 1){
-						int coinIndex = random.nextInt(coinCharactersSize);
-						mazeMatrix[x][y] = coinCharacters[coinIndex];
-						numberOfCoins += 1 + coinIndex;
+						mazeMatrix[x][y] = coinCharacters[random.nextInt(coinCharactersSize)];
+						numberOfCoins += 1;
 					}
 					else{
 						mazeMatrix[x][y] = ' ';

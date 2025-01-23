@@ -3,26 +3,32 @@ import java.util.Scanner;
 
 public class Game{
 	private int level;
-	private Scanner scanner;
-	
+	private Scanner scanner = new Scanner(System.in);
+	private boolean gameRunning = false;
 	public Game(){
-		this.level = 0;
-		scanner = new Scanner(System.in);
+		setLevel(1);
 	}
 	public Game(int level){
-		this.level = level;
-		scanner = new Scanner(System.in);
+		setLevel(level);
 	}
 	
 	private void playGame(){
-		Maze maze = new Maze(21);
-		MazeGenerator.generate(maze);
-		Player player = new Player(maze);
-		while(!(player.isPlayerReachedEnd())){
-			Printer.printMaze(maze);
-			player.keyScanner();
+		Maze maze = new Maze();
+		gameRunning = true;
+		while(level <= 50 && gameRunning){
+			if(level > 1){
+				maze = new Maze(level * 5, maze.getScore(), maze.getPlayerXPos(), maze.getPlayerYPos());
+			}
+			MazeGenerator.generate(maze);
+			Player player = new Player(maze);
+			while(!player.isPlayerReachedEnd() && gameRunning){
+				Printer.printGame(level, maze);
+				player.keyScanner();
+				gameRunning = !player.isStoppedGame();
+			}
+			level += 1;
 		}
-		
+		start();
 	}
 	public void start(){
 		Printer.printMainMenu();
@@ -36,7 +42,7 @@ public class Game{
 				playGame();
 				break;
 			case "2":
-				controls();
+				controlsMenu();
 				break;
 			case "3":
 				System.out.println("Bye!");
@@ -45,7 +51,7 @@ public class Game{
 		}
 	}
 	
-	private void controls(){
+	private void controlsMenu(){
 		Printer.printControlsMenu();
 		String playersChoise = scanner.nextLine();
 		while(!(playersChoise.equals("1"))){
@@ -53,5 +59,11 @@ public class Game{
 			playersChoise = scanner.nextLine();
 		}
 		start();
+	}
+	public void setLevel(int lvl){
+		level = lvl;
+	}
+	public int getLevel(){
+		return level;
 	}
 }

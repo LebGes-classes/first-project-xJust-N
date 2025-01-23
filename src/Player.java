@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 public class Player {
     private Maze maze;
+	boolean stoppedGame = false;
     boolean isReachedEnd = false;
     private Scanner scanner = new Scanner(System.in);
 	public Player(Maze maze){
@@ -9,7 +10,6 @@ public class Player {
 	}
 
     public void keyScanner() {
-		boolean flag = true;
 		String input = (scanner.nextLine()).toLowerCase();
 		for (int i = 0; i < input.length(); i++) {
 			char command = input.charAt(i);
@@ -27,7 +27,7 @@ public class Player {
 					movePlayer(1, false);
 					break;
 				case '1':
-					flag = false;
+					stoppedGame = true;
 					break;
 				default:
 					break;
@@ -58,7 +58,7 @@ public class Player {
                 isReachedEnd = true;
                 break;
             } else if (cell != ' ') {
-                collectCoin(playerX, playerY);
+                maze.collectCoin(playerX, playerY);
             }
 
             mazeMatrix[playerX][playerY] = playerCharacter;
@@ -77,30 +77,16 @@ public class Player {
 
     private boolean isMoveValid(int playerX, int playerY, int step, boolean isVertical) {
         if (isVertical) {
-            return maze.isAvailableCell(playerX + step, playerY) &&
-                   maze.getMazeMatrix()[playerX + step][playerY] != Chars.getWallCharacter();
+            return maze.isAvailableCell(playerX + step, playerY);
         } else {
-            return maze.isAvailableCell(playerX, playerY + step) &&
-                   maze.getMazeMatrix()[playerX][playerY + step] != Chars.getWallCharacter();
+            return maze.isAvailableCell(playerX, playerY + step);
         }
     }
-
-    private void collectCoin(int x, int y) {
-        char coin = maze.getCell(x, y);
-        char[] coins = Chars.getCoinCharacters();
-        int coinValue = maze.getCoinValue();
-        int amount = coinValue;
-
-        for (char c : coins) {
-            if (coin == c) {
-                amount += coinValue;
-                break;
-            }
-        }
-
-        maze.setNumberOfCoins(amount + maze.getNumberOfCoins());
-    }
+	
 	public boolean isPlayerReachedEnd(){
 		return isReachedEnd;
+	}
+	public boolean isStoppedGame(){
+		return stoppedGame;
 	}
 }

@@ -23,8 +23,13 @@ public class Printer{
 			+ "1) back to the main menu"
 		);
 	}
+	public static void printGame(int level, Maze maze){
+		clearConsole();
+		printMaze(maze);
+		printGameInterface(level,maze);
+	}
 	
-	public static void printMaze(Maze maze){
+	private static void printMaze(Maze maze){
 		clearConsole();
 		char mazeWallCharacter = Chars.getWallCharacter();
 		char playerCharacter = Chars.getPlayerCharacter();
@@ -55,6 +60,11 @@ public class Printer{
 		}
 		printChars(mazeWallCharacter, size + 2);
 		
+	}
+	private static void printGameInterface(int level, Maze maze){
+		System.out.println("\t" + "Level: " + level + "\t" + "\n" +
+							"\t" + "Score: " + maze.getScore() + "\t" + "\n" +
+							"\t" + "Coins to collect: " + maze.getNumberOfCoins() + "\t");
 	}
 	
 	private static void printChars(char ch, int length){

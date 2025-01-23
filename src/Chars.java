@@ -7,6 +7,14 @@ public class Chars{
 	private static final String BLUE = "\u001B[34m";
 	private static final String END = "\u001B[0m";
 	
+	public static boolean isCoin(char ch){
+		for(char coin:COIN_CHARACTERS){
+			if(ch == coin){
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	public static char getWallCharacter(){
 		return WALL_CHARACTER;

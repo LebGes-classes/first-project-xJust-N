@@ -2,34 +2,42 @@
 public class Maze{
 	private int size;
 	private char[][] mazeMatrix;
-	private int numberOfCoins = 0;
+	private int score;
 	private int coinValue = 5;
+	private int numberOfCoins;
 	private int playerX;
 	private int playerY;
 	private int finishX;
 	private int finishY;
 
 	
-	Maze(int size, int playerX, int playerY){
+	Maze(int size, int score, int playerX, int playerY){
 		setSize(size);
+		setScore(score);
 		initMazeMatrix();
 		setPlayerXPos(playerX);
 		setPlayerYPos(playerY);
 	}
 	Maze(int size){
 		setSize(size);
+		setScore(0);
 		initMazeMatrix();
 		setPlayerXPos(size - 1);
 		setPlayerYPos(size / 2);
 	}
 	Maze(){
 		setSize(5);
+		setScore(0);
 		initMazeMatrix();
 		setPlayerXPos(size - 1);
 		setPlayerYPos(size / 2);
 	}
+	
+	public boolean isValidCoordinates(int x, int y){
+		return x >= 0 && x < size && y >= 0 && y < size;
+	}
 	public boolean isAvailableCell(int x, int y){
-		return x >= 0 && y >= 0 && x < size && y < size;
+		return isValidCoordinates(x,y) && mazeMatrix[x][y] != Chars.getWallCharacter();
 	}
 	public boolean isCrossroad(int x, int y){
 		int ways = 0;
@@ -37,12 +45,27 @@ public class Maze{
 		for(int[] direction : movesets){
 			int x1 = x + direction[0];
 			int y1 = y + direction[1];
-			if(isAvailableCell(x1, y1) && mazeMatrix[x1][y1] == ' '){
+			if(isAvailableCell(x1, y1)){
 				ways++;
 			}
 		}
 		return ways > 2;
 	}
+	void collectCoin(int x, int y) {
+        char coin = mazeMatrix[x][y];
+        char[] coins = Chars.getCoinCharacters();
+        int i = 0;
+        while(i < coins.length && coin != coins[i]) {
+			i += 1;
+        }
+		if(coin == coins[i]){
+			score += (i+1) * coinValue;
+			numberOfCoins -= 1;
+		}
+		else{
+			throw new IllegalArgumentException("Not a coin");
+		}
+    }
 	
 	public char getCell(int x, int y){
 		if(isAvailableCell(x, y)){
@@ -53,19 +76,19 @@ public class Maze{
 	public int getSize(){
 		return size;
 	}
-	public void setSize(int size){
+	private void setSize(int size){
 		this.size = size;
 	}
 	public char[][] getMazeMatrix(){
 		return mazeMatrix;
 	}
-	public void initMazeMatrix(){
+	private void initMazeMatrix(){
 		this.mazeMatrix = new char[size][size];
 	}
 	public int getNumberOfCoins(){
 		return numberOfCoins;
 	}
-	public void setNumberOfCoins(int numberOfCoins){
+	void setNumberOfCoins(int numberOfCoins){
 		if(numberOfCoins >= 0){
 			this.numberOfCoins = numberOfCoins;
 		}
@@ -73,6 +96,20 @@ public class Maze{
 			throw new IllegalArgumentException("Negative value");
 		}
 	}
+		public int getScore(){
+		return score;
+	}
+	
+	void setScore(int score){
+		if(score >= 0){
+			this.score = score;
+		}
+		else{
+			throw new IllegalArgumentException("Negative value");
+		}
+	}
+	
+	
 	public int getCoinValue(){
 		return coinValue;
 	}
@@ -88,7 +125,7 @@ public class Maze{
 	public int getPlayerXPos(){
 		return playerX;
 	}
-	public void setPlayerXPos(int x){
+	void setPlayerXPos(int x){
 		if(x >= 0 && x < size){
 			playerX = x;
 		}
@@ -99,7 +136,7 @@ public class Maze{
 	public int getPlayerYPos(){
 		return playerY;
 	}
-	public void setPlayerYPos(int y){
+	void setPlayerYPos(int y){
 		if(y >= 0 && y < size){
 			playerY = y;
 		}
@@ -110,7 +147,7 @@ public class Maze{
 	public int getFinishXPos(){
 		return finishX;
 	}
-	public void setFinishXPos(int x){
+	void setFinishXPos(int x){
 		if(x >= 0 && x < size){
 			finishX = x;
 		}
