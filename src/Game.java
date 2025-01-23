@@ -15,9 +15,13 @@ public class Game{
 	}
 	
 	private void playGame(){
-		Maze maze = new Maze(101);
+		Maze maze = new Maze(21);
 		MazeGenerator.generate(maze);
-		Printer.printMaze(maze);
+		Player player = new Player(maze);
+		while(!(player.isPlayerReachedEnd())){
+			Printer.printMaze(maze);
+			player.keyScanner();
+		}
 		
 	}
 	public void start(){
@@ -48,6 +52,6 @@ public class Game{
 			System.out.println("You entered wrong number. Try again.");
 			playersChoise = scanner.nextLine();
 		}
-		startMenu();
+		start();
 	}
 }

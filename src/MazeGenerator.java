@@ -4,8 +4,8 @@ public class MazeGenerator{
 	
 	public static void generate(Maze maze){
 		int size = maze.getSize();
-		int startX = maze.getStartXPos();
-		int startY = maze.getStartYPos();
+		int startX = maze.getPlayerXPos();
+		int startY = maze.getPlayerYPos();
 		char[][] mazeMatrix = maze.getMazeMatrix();
 		char mazeWallCharacter = Chars.getWallCharacter();
 		char exitCharacter = Chars.getExitCharacter();
@@ -36,7 +36,7 @@ public class MazeGenerator{
 			for(int[] direction : movesets){
 				int x1 = x + direction[0] * 2;
 				int y1 = y + direction[1] * 2;
-				if(x1 >= 0 && y1 >= 0 && x1 < size && y1 < size){
+				if(maze.isAvailableCell(x1,y1)){
 					if(mazeMatrix[x1][y1] == mazeWallCharacter){
 						avaiableMovesets[avaiableCount][0] = direction[0];
 						avaiableMovesets[avaiableCount][1] = direction[1];

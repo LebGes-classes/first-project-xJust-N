@@ -35,7 +35,7 @@ public class Printer{
 		
 		int size = maze.getSize();
 		char[][] mazeMatrix = maze.getMazeMatrix();
-		Game.clearConsole();
+		clearConsole();
 		printChars(mazeWallCharacter, size + 2);
 		for(int i = 0; i < size; i++){
 			System.out.print("\t" + mazeWallCharacter);

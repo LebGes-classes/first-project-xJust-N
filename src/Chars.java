@@ -1,6 +1,6 @@
 public class Chars{
 	private static final char WALL_CHARACTER = '█';
-	private static final char[] COIN_CHARACTERS = {'$', '₿'};
+	private static final char[] COIN_CHARACTERS = {'$', '€', '₿'};
 	private static final char PLAYER_CHARACTER = 'o';
 	private static final char EXIT_CHARACTER = '#';
 	private static final String YELLOW = "\u001B[33m";
