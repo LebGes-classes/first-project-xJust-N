@@ -1,29 +1,41 @@
 public class Printer{
 	
-	public static void printMainMenu(){
+	static void printMainMenu(){
 		clearConsole();
 		System.out.println(
-			"-----\tMaze\t-----\n" 
+			"<-----The Maze----->\n" 
 			+ "1) New game\n" 
 			+ "2) How to play\n" 
 			+ "3) Exit"
 		);
 	}
-	public static void printControlsMenu(){
+	static void printControlsMenu(){
 		clearConsole();
 		System.out.println(
-			"Task: Collect all coins to go on the next level\n"
+			"Task: Collect coins and find an exit\n"
 			+ "\n"
 			+ "Controls:\n"
 			+ "W - forward\n"
 			+ "A - left\n"
 			+ "S - back\n"
 			+ "D - right\n"
+			+ "1 - back to the main menu\n"
+			+ "2 - skip level\n"
 			+ "\n"
 			+ "1) back to the main menu"
 		);
 	}
-	public static void printGame(int level, Maze maze){
+	static void printGameOverScreen(int level, int score){
+		clearConsole();
+		System.out.println(
+			"\tGame over\t\n" 
+			+ "Score: " + score + " points\t\n"
+			+ "Completed: " + level + " levels\t\n"
+			+ "\n"
+			+ "1) back to the main menu"
+		);
+	}
+	static void printGame(int level, Maze maze){
 		clearConsole();
 		printMaze(maze);
 		printGameInterface(level,maze);

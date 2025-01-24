@@ -3,21 +3,30 @@ import java.util.Scanner;
 
 public class Game{
 	private int level;
+	private int finalLevel;
 	private Scanner scanner = new Scanner(System.in);
 	private boolean gameRunning = false;
+	
 	public Game(){
-		setLevel(1);
+		setLevel(0);
+		setFinalLevel(50);
 	}
 	public Game(int level){
 		setLevel(level);
+		setFinalLevel(50);
+	}
+	public Game(int level, int finalLevel){
+		setLevel(level);
+		setFinalLevel(finalLevel);
 	}
 	
 	private void playGame(){
 		Maze maze = new Maze();
 		gameRunning = true;
-		while(level <= 50 && gameRunning){
+		while(level <= finalLevel && gameRunning){
+			level += 1;
 			if(level > 1){
-				maze = new Maze(level * 5, maze.getScore(), maze.getPlayerXPos(), maze.getPlayerYPos());
+				maze = new Maze(level, maze.getScore(), maze.getPlayerXPos(), maze.getPlayerYPos());
 			}
 			MazeGenerator.generate(maze);
 			Player player = new Player(maze);
@@ -26,9 +35,9 @@ public class Game{
 				player.keyScanner();
 				gameRunning = !player.isStoppedGame();
 			}
-			level += 1;
 		}
-		start();
+		Printer.printGameOverScreen(level - 1, maze.getScore());
+		waitForReturnToMainMenu();
 	}
 	public void start(){
 		Printer.printMainMenu();
@@ -42,7 +51,8 @@ public class Game{
 				playGame();
 				break;
 			case "2":
-				controlsMenu();
+				Printer.printControlsMenu();
+				waitForReturnToMainMenu();
 				break;
 			case "3":
 				System.out.println("Bye!");
@@ -51,8 +61,7 @@ public class Game{
 		}
 	}
 	
-	private void controlsMenu(){
-		Printer.printControlsMenu();
+	private void waitForReturnToMainMenu(){
 		String playersChoise = scanner.nextLine();
 		while(!(playersChoise.equals("1"))){
 			System.out.println("You entered wrong number. Try again.");
@@ -60,10 +69,16 @@ public class Game{
 		}
 		start();
 	}
-	public void setLevel(int lvl){
+	private void setLevel(int lvl){
 		level = lvl;
 	}
 	public int getLevel(){
 		return level;
+	}
+	private void setFinalLevel(int lvl){
+		finalLevel = lvl;
+	}
+	public int getFinalLevel(){
+		return finalLevel;
 	}
 }

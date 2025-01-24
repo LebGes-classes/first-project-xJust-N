@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class Player {
     private Maze maze;
 	boolean stoppedGame = false;
-    boolean isReachedEnd = false;
+    boolean reachedEnd = false;
     private Scanner scanner = new Scanner(System.in);
 	public Player(Maze maze){
 		this.maze = maze;
@@ -29,6 +29,9 @@ public class Player {
 				case '1':
 					stoppedGame = true;
 					break;
+				case '2':
+					skipLevel();
+					break;
 				default:
 					break;
 			}
@@ -45,7 +48,7 @@ public class Player {
         char wallCharacter = Chars.getWallCharacter(); 
         char playerCharacter = Chars.getPlayerCharacter();
 
-        while (!isReachedEnd && isMoveValid(playerX, playerY, step, isVertical)) {
+        while (!reachedEnd && isMoveValid(playerX, playerY, step, isVertical)) {
             mazeMatrix[playerX][playerY] = ' ';
             if (isVertical) {
                 playerX += step;
@@ -55,7 +58,7 @@ public class Player {
             char cell = mazeMatrix[playerX][playerY];
 
             if (cell == exitCharacter) {
-                isReachedEnd = true;
+                reachedEnd = true;
                 break;
             } else if (cell != ' ') {
                 maze.collectCoin(playerX, playerY);
@@ -82,11 +85,16 @@ public class Player {
             return maze.isAvailableCell(playerX, playerY + step);
         }
     }
-	
-	public boolean isPlayerReachedEnd(){
-		return isReachedEnd;
+	private void skipLevel(){
+		maze.setPlayerXPos(maze.getFinishXPos());
+		maze.setPlayerYPos(maze.getFinishYPos());
+		reachedEnd = true;
 	}
-	public boolean isStoppedGame(){
+	
+	boolean isPlayerReachedEnd(){
+		return reachedEnd;
+	}
+	boolean isStoppedGame(){
 		return stoppedGame;
 	}
 }

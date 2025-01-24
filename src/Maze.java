@@ -11,26 +11,39 @@ public class Maze{
 	private int finishY;
 
 	
-	Maze(int size, int score, int playerX, int playerY){
-		setSize(size);
+	Maze(int level, int score, int playerX, int playerY){
+		setSize(convertLevelToSize(level));
 		setScore(score);
 		initMazeMatrix();
 		setPlayerXPos(playerX);
 		setPlayerYPos(playerY);
 	}
-	Maze(int size){
-		setSize(size);
+	Maze(int level){
+		setSize(convertLevelToSize(level));
 		setScore(0);
 		initMazeMatrix();
 		setPlayerXPos(size - 1);
 		setPlayerYPos(size / 2);
 	}
 	Maze(){
-		setSize(5);
+		setSize(convertLevelToSize(1));
 		setScore(0);
 		initMazeMatrix();
 		setPlayerXPos(size - 1);
 		setPlayerYPos(size / 2);
+	}
+	
+	private int convertLevelToSize(int level){
+		int border = 3;
+		if(level <= 0){
+			throw new IllegalArgumentException("Level must be positive");
+		}
+		if(level <= border){
+			return level * 5;
+		}
+		else{
+			return border * 5 + (level - border) * 4;
+		}
 	}
 	
 	public boolean isValidCoordinates(int x, int y){
@@ -66,17 +79,18 @@ public class Maze{
 			throw new IllegalArgumentException("Not a coin");
 		}
     }
-	
-	public char getCell(int x, int y){
-		if(isAvailableCell(x, y)){
-			return mazeMatrix[x][y];
+	public void setCoinValue(int coinValue){
+		if(coinValue > 0){
+			this.coinValue = coinValue;
 		}
-		throw new IllegalArgumentException("Invalid coordinates");
+		else{
+			throw new IllegalArgumentException("Value must be positive");
+		}
 	}
 	public int getSize(){
 		return size;
 	}
-	private void setSize(int size){
+	void setSize(int size){
 		this.size = size;
 	}
 	public char[][] getMazeMatrix(){
@@ -89,81 +103,43 @@ public class Maze{
 		return numberOfCoins;
 	}
 	void setNumberOfCoins(int numberOfCoins){
-		if(numberOfCoins >= 0){
-			this.numberOfCoins = numberOfCoins;
-		}
-		else{
-			throw new IllegalArgumentException("Negative value");
-		}
+		this.numberOfCoins = numberOfCoins;
 	}
-		public int getScore(){
+	public int getScore(){
 		return score;
 	}
 	
 	void setScore(int score){
-		if(score >= 0){
-			this.score = score;
-		}
-		else{
-			throw new IllegalArgumentException("Negative value");
-		}
+		this.score = score;
 	}
-	
 	
 	public int getCoinValue(){
 		return coinValue;
-	}
-	public void setCoinValue(int coinValue){
-		if(coinValue >= 0){
-			this.coinValue = coinValue;
-		}
-		else{
-			throw new IllegalArgumentException("Negative value");
-		}
 	}
 	
 	public int getPlayerXPos(){
 		return playerX;
 	}
 	void setPlayerXPos(int x){
-		if(x >= 0 && x < size){
-			playerX = x;
-		}
-		else{
-			throw new IllegalArgumentException("Invalid x");
-		}
+		playerX = x;
 	}
 	public int getPlayerYPos(){
 		return playerY;
 	}
 	void setPlayerYPos(int y){
-		if(y >= 0 && y < size){
-			playerY = y;
-		}
-		else{
-			throw new IllegalArgumentException("Invalid y");
-		}
+		playerY = y;
 	}
 	public int getFinishXPos(){
 		return finishX;
 	}
 	void setFinishXPos(int x){
-		if(x >= 0 && x < size){
-			finishX = x;
-		}
-		else{
-			throw new IllegalArgumentException("Invalid y");
-		}
+		finishX = x;
 	}
+
 	public int getFinishYPos(){
 		return finishY;
 	}
-	public void setFinishYPos(int y){
-		if(y >= 0 && y < size){
-			finishY = y;
-		}
-		else{
-			throw new IllegalArgumentException("Invalid y");
-		}
+	void setFinishYPos(int y){
+		finishY = y;
 	}
 }

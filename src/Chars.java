@@ -1,14 +1,14 @@
 public class Chars{
-	private static final char WALL_CHARACTER = '█';
-	private static final char[] COIN_CHARACTERS = {'$', '€', '₿'};
-	private static final char PLAYER_CHARACTER = 'o';
-	private static final char EXIT_CHARACTER = '#';
-	private static final String YELLOW = "\u001B[33m";
-	private static final String BLUE = "\u001B[34m";
-	private static final String END = "\u001B[0m";
+	private static char wallCharacter = '█';
+	private static char[] coinCharacters = {'$', '€', '₿'};
+	private static char playerCharacter = 'o';
+	private static char exitCharacter = '#';
+	private static String yellow = "\u001b[33m";
+	private static String blue = "\u001b[34m";
+	private static String end = "\u001b[0m";
 	
 	public static boolean isCoin(char ch){
-		for(char coin:COIN_CHARACTERS){
+		for(char coin:coinCharacters){
 			if(ch == coin){
 				return true;
 			}
@@ -17,28 +17,28 @@ public class Chars{
 	}
 	
 	public static char getWallCharacter(){
-		return WALL_CHARACTER;
+		return wallCharacter;
 	}
 	
 	public static char[] getCoinCharacters(){
-		return COIN_CHARACTERS;
+		return coinCharacters;
 	}
 
 	public static char getPlayerCharacter(){
-		return PLAYER_CHARACTER;
+		return playerCharacter;
 	}
 
 	public static char getExitCharacter(){
-		return EXIT_CHARACTER;
+		return exitCharacter;
 	}
 	public static String getColorYellow(){
-		return YELLOW;
+		return yellow;
 	}
 	public static String getColorBlue(){
-		return BLUE;
+		return blue;
 	}
 	public static String getColorEnd(){
-		return END;
+		return end;
 	}
 	
 	
