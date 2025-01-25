@@ -84,7 +84,7 @@ public class Maze{
 			this.coinValue = coinValue;
 		}
 		else{
-			throw new IllegalArgumentException("Value must be positive");
+			throw new IllegalArgumentException("Coin value must be positive");
 		}
 	}
 	public int getSize(){
@@ -110,6 +110,9 @@ public class Maze{
 	}
 	
 	void setScore(int score){
+		if(score < 0){
+			throw new IllegalArgumentException("Score must be positive");
+		}
 		this.score = score;
 	}
 	
@@ -121,12 +124,18 @@ public class Maze{
 		return playerX;
 	}
 	void setPlayerXPos(int x){
+		if(!isValidCoordinates(x, 0)){
+			throw new IllegalArgumentException("Invalid player x coordinate");
+		}
 		playerX = x;
 	}
 	public int getPlayerYPos(){
 		return playerY;
 	}
 	void setPlayerYPos(int y){
+		if(!isValidCoordinates(0, y)){
+			throw new IllegalArgumentException("Invalid player y coordinate");
+		}
 		playerY = y;
 	}
 	public int getFinishXPos(){

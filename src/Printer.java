@@ -86,6 +86,9 @@ public class Printer{
 		}
 		System.out.println("\t");	
 	}
+	static void printError(){
+		System.out.println("You entered wrong number. Try again.");
+	}
 	public static void clearConsole(){
 		try {
             new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();

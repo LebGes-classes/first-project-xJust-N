@@ -1,6 +1,5 @@
 import java.util.Scanner;
 
-
 public class Game{
 	private int level;
 	private int finalLevel;
@@ -43,7 +42,7 @@ public class Game{
 		Printer.printMainMenu();
 		String playersChoise = scanner.nextLine();
 		while(!(playersChoise.equals("1") || playersChoise.equals("2") || playersChoise.equals("3"))){
-			System.out.println("You entered wrong number. Try again.");
+			Printer.printError();
 			playersChoise = scanner.nextLine();
 		}
 		switch(playersChoise){
@@ -64,18 +63,24 @@ public class Game{
 	private void waitForReturnToMainMenu(){
 		String playersChoise = scanner.nextLine();
 		while(!(playersChoise.equals("1"))){
-			System.out.println("You entered wrong number. Try again.");
+			Printer.printError();
 			playersChoise = scanner.nextLine();
 		}
 		start();
 	}
 	private void setLevel(int lvl){
+		if(lvl < 0){
+			throw new IllegalArgumentException("Level must be positive");
+		}
 		level = lvl;
 	}
 	public int getLevel(){
 		return level;
 	}
 	private void setFinalLevel(int lvl){
+		if(lvl < 0){
+			throw new IllegalArgumentException("Final level must be positive");
+		}
 		finalLevel = lvl;
 	}
 	public int getFinalLevel(){

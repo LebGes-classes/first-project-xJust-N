@@ -6,29 +6,22 @@ public class MazeGenerator{
 		int size = maze.getSize();
 		int startX = maze.getPlayerXPos();
 		int startY = maze.getPlayerYPos();
-		char[][] mazeMatrix = maze.getMazeMatrix();
-		char mazeWallCharacter = Chars.getWallCharacter();
-		char exitCharacter = Chars.getExitCharacter();
-		char[] coinCharacters = Chars.getCoinCharacters();
-		int coinCharactersSize = coinCharacters.length;
-		
-		for(int i = 0; i < size; i++){
-			for(int j = 0; j < size; j++){
-				mazeMatrix[i][j] = mazeWallCharacter;
-			}
-		}
-		mazeMatrix[startX][startY] = Chars.getPlayerCharacter();
-		
-		Random random = new Random();
-		int coinSpawnChance = size;
+		int coinSpawnChance = convertSizeToCoinChance(size);
 		int numberOfCoins = 0;
 		int[][] movesets = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
 		int[][] avaiableMovesets = {{0, 0}, {0, 0}, {0, 0}, {0, 0}};
 		int x = startX;
 		int y = startY;
-		int finishX = 0;
-		int finishY = 0;
+		
+		char[][] mazeMatrix = maze.getMazeMatrix();
+		char mazeWallCharacter = Chars.getWallCharacter();
+		char exitCharacter = Chars.getExitCharacter();
+		char[] coinCharacters = Chars.getCoinCharacters();
 		boolean isExitCreated = false;
+		Random random = new Random();
+		
+		fillMatrix(mazeMatrix, mazeWallCharacter, size);
+		mazeMatrix[startX][startY] = Chars.getPlayerCharacter();
 		while(x != startX || y != startY || !isExitCreated){
 			int avaiableCount = 0;
 			int backX = 0;
@@ -52,12 +45,12 @@ public class MazeGenerator{
 				for(int i = 0; i < 2; i++){	
 					if(!isExitCreated){
 						mazeMatrix[x][y] = exitCharacter;
-						finishX = x;
-						finishY = y;
+						maze.setFinishXPos(x);
+						maze.setFinishYPos(y);
 						isExitCreated = true;
 					}
 					else if(numberOfCoins == 0 || random.nextInt(coinSpawnChance) == coinSpawnChance - 1){
-						mazeMatrix[x][y] = coinCharacters[random.nextInt(coinCharactersSize)];
+						mazeMatrix[x][y] = coinCharacters[random.nextInt(coinCharacters.length)];
 						numberOfCoins += 1;
 					}
 					else{
@@ -76,13 +69,21 @@ public class MazeGenerator{
 					mazeMatrix[x][y] = 'v';
 				}
 					
-				finishX = x;
-				finishY = y;
 			}
 		}
-		maze.setFinishXPos(finishX);
-		maze.setFinishYPos(finishY);
+	
 		maze.setNumberOfCoins(numberOfCoins);
 		
 	}
+	private static int convertSizeToCoinChance(int size){
+		return size;
+	}
+	private static void fillMatrix(char[][] matrix, char ch, int size){
+		for(int i = 0; i < size; i++){
+			for(int j = 0; j < size; j++){
+				matrix[i][j] = ch;
+			}
+		}
+	}
+	
 }

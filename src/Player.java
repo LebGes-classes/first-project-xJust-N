@@ -2,9 +2,10 @@ import java.util.Scanner;
 
 public class Player {
     private Maze maze;
-	boolean stoppedGame = false;
-    boolean reachedEnd = false;
+	private boolean stoppedGame = false;
+    private boolean reachedEnd = false;
     private Scanner scanner = new Scanner(System.in);
+	
 	public Player(Maze maze){
 		this.maze = maze;
 	}
@@ -47,8 +48,9 @@ public class Player {
         char exitCharacter = Chars.getExitCharacter();
         char wallCharacter = Chars.getWallCharacter(); 
         char playerCharacter = Chars.getPlayerCharacter();
-
-        while (!reachedEnd && isMoveValid(playerX, playerY, step, isVertical)) {
+		
+		boolean flagToContinue = true;
+        while (flagToContinue && isMoveValid(playerX, playerY, step, isVertical)) {
             mazeMatrix[playerX][playerY] = ' ';
             if (isVertical) {
                 playerX += step;
@@ -59,7 +61,7 @@ public class Player {
 
             if (cell == exitCharacter) {
                 reachedEnd = true;
-                break;
+                flagToContinue = false;
             } else if (cell != ' ') {
                 maze.collectCoin(playerX, playerY);
             }
@@ -67,7 +69,7 @@ public class Player {
             mazeMatrix[playerX][playerY] = playerCharacter;
 
             if (maze.isCrossroad(playerX, playerY)) {
-                break;
+                flagToContinue = false;
             }
         }
 
@@ -91,10 +93,10 @@ public class Player {
 		reachedEnd = true;
 	}
 	
-	boolean isPlayerReachedEnd(){
+	public boolean isPlayerReachedEnd(){
 		return reachedEnd;
 	}
-	boolean isStoppedGame(){
+	public boolean isStoppedGame(){
 		return stoppedGame;
 	}
 }
